@@ -1,3 +1,3 @@
-# newsfronts_backend
+# NewsFronts Backend
 
-The Backend of the NewsFronts web App
+The Backend of the NewsFronts web App built with Node.Js, Express & MongoDb
