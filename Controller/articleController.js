@@ -6,6 +6,26 @@ const catchAsync = require("../util/catchAsync");
 const everything = require("../util/fetchArticles");
 const Source = require("../models/sourcesModel");
 
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
+
 exports.getArticles = catchAsync(async (req, res) => {
   const pageSize = Number(req.query.pageSize) || 10;
   const page = Number(req.query.pageNumber) || 1;
@@ -18,7 +38,7 @@ exports.getArticles = catchAsync(async (req, res) => {
     status: "success",
     page,
     pageSize,
-    articles,
+    articles: shuffle(articles),
   });
 });
 
@@ -50,7 +70,7 @@ exports.getArticlesByCategory = catchAsync(async (req, res, next) => {
     page,
     pageSize,
     articlesCount: articles.length,
-    articles,
+    articles: shuffle(articles),
   });
 });
 
@@ -82,7 +102,7 @@ exports.getArticlesBySource = catchAsync(async (req, res, next) => {
     count,
     page,
     pageSize,
-    articles,
+    articles: shuffle(articles),
   });
 });
 
@@ -101,7 +121,7 @@ exports.getHeadlines = catchAsync(async (req, res, next) => {
     page,
     count,
     pageSize,
-    articles,
+    articles: shuffle(articles),
   });
 });
 
@@ -134,7 +154,7 @@ exports.getArticlesBySearch = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     count: fetchedArticles.length,
-    articles: fetchedArticles,
+    articles: shuffle(fetchedArticles),
     page,
     pageSize,
   });
