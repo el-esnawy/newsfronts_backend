@@ -62,14 +62,14 @@ app.use(xssClean());
 app.use("/api/v1/", articleRouter);
 app.use("/api/v1/user", userRouter);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../FrontEnd/build")));
-  app.get("*", (req, res) =>
-    res.sendFile(path.join(__dirname, "../FrontEnd/build")),
-  );
-} else {
-  console.log(`APP is running on Port: ${port}`);
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../FrontEnd/build")));
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.join(__dirname, "../FrontEnd/build")),
+//   );
+// } else {
+//   console.log(`APP is running on Port: ${port}`);
+// }
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't Find ${req.originalUrl} on this Server!`, 404));
 });
